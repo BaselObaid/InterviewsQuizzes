@@ -1,8 +1,7 @@
 package com.basel.InterviewsQuizzes.repository;
 
-import com.basel.InterviewsQuizzes.model.pojo.Option;
 import com.basel.InterviewsQuizzes.model.entity.Question;
-import com.basel.InterviewsQuizzes.model.pojo.Difficulty;
+import com.basel.InterviewsQuizzes.model.pojo.Option;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +38,7 @@ class QuestionRepositoryTest {
         Question question = Question.builder()
                 .questionText("what is java?")
                 .solution("java is an object oriented programming and independent platform language")
-                .difficulty(Difficulty.Easy)
+                .difficulty("EASY")
                 .timeDuration(Duration.ofSeconds(30))
                 .options(createOptions())
                 .build();

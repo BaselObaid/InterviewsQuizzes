@@ -1,8 +1,8 @@
 package com.basel.InterviewsQuizzes.model.dto;
 
-import com.basel.InterviewsQuizzes.model.pojo.Difficulty;
 import com.basel.InterviewsQuizzes.model.pojo.Option;
-import jakarta.validation.constraints.NotEmpty;
+import com.basel.InterviewsQuizzes.validation.DifficultyValidationAnnotation;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,11 +12,12 @@ import java.time.Duration;
 @Builder
 public class QuestionDto {
     private final long id;
-    @NotEmpty
+    @NotBlank(message = "the question must have a question text")
     private final String questionText;
-    @NotEmpty
+    @NotBlank(message = "the question must have a solution")
     private final String solution;
-    private final Difficulty difficulty;
+    @DifficultyValidationAnnotation
+    private final String difficulty;
     private final Duration timeDuration;
     private final Option options;
 }

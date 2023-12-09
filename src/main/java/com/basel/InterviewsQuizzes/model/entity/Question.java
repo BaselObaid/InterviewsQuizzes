@@ -1,6 +1,5 @@
 package com.basel.InterviewsQuizzes.model.entity;
 
-import com.basel.InterviewsQuizzes.model.pojo.Difficulty;
 import com.basel.InterviewsQuizzes.model.pojo.Option;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,8 +26,8 @@ public class Question {
     private String questionText;
     @Column(nullable = false)
     private String solution;
-    @Enumerated(EnumType.STRING)
-    private Difficulty difficulty;
+
+    private String difficulty;
 
     @Column(name="time_limit")
     private Duration timeDuration;

@@ -1,8 +1,8 @@
 package com.basel.InterviewsQuizzes.service;
 
+import com.basel.InterviewsQuizzes.exception.QuestionAssociatedWithQuizException;
 import com.basel.InterviewsQuizzes.exception.QuestionNotFoundException;
 import com.basel.InterviewsQuizzes.model.dto.QuestionDto;
-import com.basel.InterviewsQuizzes.model.pojo.Difficulty;
 import com.basel.InterviewsQuizzes.model.pojo.Option;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -35,14 +35,14 @@ class QuestionServiceImplTest {
                 .questionText("Which of the following statements is true about the ArrayList class in Java?")
                 .solution(" Elements in an ArrayList are accessed using an index.")
                 .options(options)
-                .difficulty(Difficulty.MEDIUM)
+                .difficulty("MEDIUM")
                 .timeDuration(Duration.ofSeconds(30))
                 .build();
         questionService.AddQuestion(questionDto);
     }
 
     @Test
-    void deleteQuestion() {
+    void deleteQuestion() throws QuestionAssociatedWithQuizException {
         questionService.deleteQuestion(2L);
     }
 
@@ -53,7 +53,7 @@ class QuestionServiceImplTest {
                 .questionText("what is string pool in java?")
                 .solution("it is a place in memory heap to store literal strings")
                 .timeDuration(Duration.ofSeconds(30))
-                .difficulty(Difficulty.MEDIUM)
+                .difficulty("MEDIUM")
                 .build();
         questionService.updateQuestion(questionDto, 2L);
     }
@@ -81,7 +81,7 @@ class QuestionServiceImplTest {
 
     @Test
     void getQuestionsByDifficulty() {
-        List<QuestionDto> questions = questionService.getQuestionsByDifficulty(Difficulty.Easy);
+        List<QuestionDto> questions = questionService.getQuestionsByDifficulty("EASY");
         logger.info(questions.toString());
     }
 
