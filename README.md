@@ -1,1 +1,1 @@
-# InterviewsQuizzes
+# ProgrammingQuizzes
