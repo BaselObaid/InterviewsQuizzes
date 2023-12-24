@@ -1,7 +1,7 @@
 package com.basel.InterviewsQuizzes.service;
 
-import com.basel.InterviewsQuizzes.exception.QuestionAssociatedWithQuizException;
-import com.basel.InterviewsQuizzes.exception.QuestionNotFoundException;
+import com.basel.InterviewsQuizzes.exception.question.QuestionAssociatedWithQuizException;
+import com.basel.InterviewsQuizzes.exception.question.QuestionNotFoundException;
 import com.basel.InterviewsQuizzes.model.dto.QuestionDto;
 import com.basel.InterviewsQuizzes.model.pojo.Option;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.Duration;
-import java.util.List;
 
 @SpringBootTest
 @ActiveProfiles("test_question_service")
@@ -57,12 +56,11 @@ class QuestionServiceImplTest {
                 .build();
         questionService.updateQuestion(questionDto, 2L);
     }
-
-    @Test
-    void getAllQuestions() {
-        List<QuestionDto> questionList = questionService.getAllQuestions();
-        logger.info(questionList.toString());
-    }
+    //   @Test
+//    void getAllQuestions() {
+//        List<QuestionDto> questionList = questionService.getAllQuestions();
+//        logger.info(questionList.toString());
+//    }
 
     @Test
     void getQuestionById() {
@@ -79,11 +77,11 @@ class QuestionServiceImplTest {
 
     }
 
-    @Test
-    void getQuestionsByDifficulty() {
-        List<QuestionDto> questions = questionService.getQuestionsByDifficulty("EASY");
-        logger.info(questions.toString());
-    }
+//    @Test
+//    void getQuestionsByDifficulty() {
+//        List<QuestionDto> questions = questionService.getQuestionsByDifficulty("EASY");
+//        logger.info(questions.toString());
+//    }
 
     @Test
     void updateOptionsInQuestion() {

@@ -1,14 +1,14 @@
 package com.basel.InterviewsQuizzes.model.entity;
 
-import com.basel.InterviewsQuizzes.model.pojo.Category;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Quizzes")
@@ -22,12 +22,11 @@ public class Quiz {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String title;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Category category;
+    private String category;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
@@ -35,7 +34,13 @@ public class Quiz {
             joinColumns = @JoinColumn(name = "quiz_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id")
     )
-    private Set<Question> questions = new HashSet<>();
+    private List<Question> questions = new ArrayList<>();
 
+    @Min(value = 0, message = "total degrees should be >= 0.0")
+    private double totalDegrees;
 
+    @Override
+    public String toString() {
+        return "Quiz{id=" + id + ", title='" + title + "', category='" + category + "', totalDegrees=" + totalDegrees + "}";
+    }
 }

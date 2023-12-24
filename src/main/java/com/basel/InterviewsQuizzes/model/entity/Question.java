@@ -2,14 +2,15 @@ package com.basel.InterviewsQuizzes.model.entity;
 
 import com.basel.InterviewsQuizzes.model.pojo.Option;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Duration;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "questions")
@@ -36,8 +37,12 @@ public class Question {
     @Embedded
     private Option options;
 
+    @Min(value = 0, message = "question degree should be >= 0.0")
+    private double degree;
 
     @ManyToMany(mappedBy = "questions")
-    private Set<Quiz> quizzes = new HashSet<>();
+    private List<Quiz> quizzes = new ArrayList<>();
+
+
 
 }

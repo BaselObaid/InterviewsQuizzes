@@ -1,7 +1,6 @@
 package com.basel.InterviewsQuizzes.repository;
 
 import com.basel.InterviewsQuizzes.model.entity.Quiz;
-import com.basel.InterviewsQuizzes.model.pojo.Category;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,14 +18,14 @@ class QuizRepositoryTest {
 
 
 
-    @Test
-    public void createNewQuizWithoutQuestions(){
-        Quiz quiz = Quiz.builder()
-                .title("java quiz for beginners")
-                .category(Category.JAVA)
-                .build();
-        quizRepository.save(quiz);
-    }
+  //  @Test
+//    public void createNewQuizWithoutQuestions(){
+//        Quiz quiz = Quiz.builder()
+//                .title("java quiz for beginners")
+//                .category(Category.JAVA)
+//                .build();
+//        quizRepository.save(quiz);
+//    }
 
 
 

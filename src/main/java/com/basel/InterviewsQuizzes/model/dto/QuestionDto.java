@@ -20,4 +20,5 @@ public class QuestionDto {
     private final String difficulty;
     private final Duration timeDuration;
     private final Option options;
+    private final double degree;
 }

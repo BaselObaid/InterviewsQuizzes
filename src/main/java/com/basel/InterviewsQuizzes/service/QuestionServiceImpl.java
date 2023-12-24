@@ -1,19 +1,21 @@
 package com.basel.InterviewsQuizzes.service;
 
-import com.basel.InterviewsQuizzes.exception.QuestionAssociatedWithQuizException;
-import com.basel.InterviewsQuizzes.exception.QuestionNotFoundException;
+import com.basel.InterviewsQuizzes.exception.question.QuestionAssociatedWithQuizException;
+import com.basel.InterviewsQuizzes.exception.question.QuestionNotFoundException;
+import com.basel.InterviewsQuizzes.exception.global.SortValueException;
 import com.basel.InterviewsQuizzes.model.dto.QuestionDto;
 import com.basel.InterviewsQuizzes.model.entity.Question;
 import com.basel.InterviewsQuizzes.model.mapper.QuestionMapper;
 import com.basel.InterviewsQuizzes.model.mapper.UpdateMapper;
 import com.basel.InterviewsQuizzes.model.pojo.Option;
 import com.basel.InterviewsQuizzes.repository.QuestionRepository;
-import com.basel.InterviewsQuizzes.validation.DifficultyValidationAnnotation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -50,6 +52,14 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     @Transactional
+    public void updateQuestionDegree(double degree, long id){
+        Question question = checkQuestionExistence(id);
+        question.setDegree(degree);
+        questionRepository.save(question);
+    }
+
+    @Override
+    @Transactional
     public void updateOptionsInQuestion(Option options, long id) {
         Question question = checkQuestionExistence(id);
         question.setOptions(options);
@@ -57,8 +67,10 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public List<QuestionDto> getAllQuestions() {
-        return questionMapper.ListQuestionsToListQuestionDto(questionRepository.findAll());
+    public Page<QuestionDto> getAllQuestions(int page, int size, String sortField, String sortOrder) {
+        Page<Question> questionsPage = questionRepository.findAll
+                (createPageRequest(page, size, sortField, sortOrder));
+        return questionsPage.map(questionMapper::questionToQuestionDto);
     }
 
     @Override
@@ -68,20 +80,32 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public List<QuestionDto> getQuestionByQuestionText( String qText) {
-        List<Question> questions = questionRepository.findByQuestionTextContaining(qText);
-        List<QuestionDto> questionDtos = questionMapper.ListQuestionsToListQuestionDto(questions);
-        return questionDtos;
+    public Page<QuestionDto> getQuestionByQuestionText( String qText, int page, int size, String sortField, String sortOrder) {
+        Page<Question> questionsPage = questionRepository.findByQuestionTextContaining
+                (qText, createPageRequest(page, size, sortField, sortOrder));
+        return questionsPage.map(questionMapper::questionToQuestionDto);
     }
 
     @Override
-    public List<QuestionDto> getQuestionsByDifficulty( String difficulty) {
-        List<Question> questions = questionRepository.findQuestionByDifficulty(difficulty);
-        List<QuestionDto> questionDtos = questionMapper.ListQuestionsToListQuestionDto(questions);
-        return questionDtos;
+    public Page<QuestionDto> getQuestionsByDifficulty(String difficulty, int page, int size, String sortField, String sortOrder) {
+        Page<Question> questionPage = questionRepository.findQuestionByDifficulty
+                    (difficulty, createPageRequest(page, size, sortField, sortOrder));
+        return questionPage.map(questionMapper::questionToQuestionDto);
     }
 
+    private Pageable createPageRequest(int page, int size, String sortField, String sortOrder){
+       return PageRequest.of(page, size, getSort(sortField, sortOrder));
+    }
 
+    private Sort getSort(String sortField, String sortOrder) {
+        if ("asc".equalsIgnoreCase(sortOrder)) {
+            return Sort.by(sortField).ascending();
+        } else if("desc".equalsIgnoreCase(sortOrder)){
+            return Sort.by(sortField).descending();
+        }else{
+            throw new SortValueException("order by desc or asc");
+        }
+    }
 
 
     private Question checkQuestionExistence(long id) {

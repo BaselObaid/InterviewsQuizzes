@@ -1,8 +1,10 @@
 package com.basel.InterviewsQuizzes.model.mapper;
 
-import com.basel.InterviewsQuizzes.model.entity.Quiz;
 import com.basel.InterviewsQuizzes.model.dto.QuizDto;
-import org.mapstruct.*;
+import com.basel.InterviewsQuizzes.model.entity.Quiz;
+import org.mapstruct.Mapper;
+
+import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface QuizMapper {
@@ -10,5 +12,6 @@ public interface QuizMapper {
 
     QuizDto quizToQuizDto(Quiz quiz);
 
+    Set<Quiz> setQuizDtoToSetQuiz(Set<QuizDto> quizDtos);
 
 }

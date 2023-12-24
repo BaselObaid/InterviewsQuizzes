@@ -1,19 +1,20 @@
 package com.basel.InterviewsQuizzes.service;
 
-import com.basel.InterviewsQuizzes.exception.QuestionAssociatedWithQuizException;
+import com.basel.InterviewsQuizzes.exception.question.QuestionAssociatedWithQuizException;
 import com.basel.InterviewsQuizzes.model.dto.QuestionDto;
 import com.basel.InterviewsQuizzes.model.pojo.Option;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface QuestionService {
 
     void AddQuestion(QuestionDto questionDto);
     void deleteQuestion(long id) throws QuestionAssociatedWithQuizException;
     void updateQuestion(QuestionDto questionDto, long id);
-    List<QuestionDto> getAllQuestions();
+    void updateQuestionDegree(double degree, long id);
+    Page<QuestionDto> getAllQuestions(int page, int size, String sortField, String sortOrder);
     QuestionDto getQuestionById(long id);
-    List<QuestionDto> getQuestionByQuestionText(String qText);
-    List<QuestionDto> getQuestionsByDifficulty(String difficulty);
+    Page<QuestionDto> getQuestionByQuestionText(String qText, int page, int size, String sortField, String sortOrder);
     void updateOptionsInQuestion(Option options, long id);
+    Page<QuestionDto> getQuestionsByDifficulty(String difficulty, int page, int size, String sortField, String sortOrder);
+
 }

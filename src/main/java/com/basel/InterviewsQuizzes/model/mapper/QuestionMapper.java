@@ -17,5 +17,8 @@ public interface QuestionMapper {
 
     List<QuestionDto> ListQuestionsToListQuestionDto(List<Question> questions);
 
+    List<Question> listQuestionDtoToListQuestion(List<QuestionDto> questionDtos);
+
+    Set<Question> setQuestionsDtoToSetQuestion(Set<QuestionDto> questionDtos);
 
 }
